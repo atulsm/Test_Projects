@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="D:/sentinel/content/dev/connectors/AA-common/util/lib/connectorutil.jar"/>
+	<classpathentry kind="var" path="ESEC_SRC_ROOT/ebuild/lib/ccsbase.jar"/>
+	<classpathentry kind="lib" path="E:/install/jdk1.7.0_45/lib/tools.jar"/>
+	<classpathentry kind="lib" path="D:/sentinel/research/openscv/opencsv-2.3/deploy/opencsv-2.3.jar"/>
+	<classpathentry kind="lib" path="D:/sentinel/maven/org/apache/lucene/lucene-core/4.8.1/lucene-core-4.8.1.jar"/>
+	<classpathentry kind="lib" path="D:/sentinel/maven/org/apache/lucene/lucene-analyzers-common/4.8.1/lucene-analyzers-common-4.8.1.jar"/>
+	<classpathentry kind="lib" path="D:/sentinel/maven/oracle/oracle-jdbc/11.2.0.2.0/oracle-jdbc-11.2.0.2.0.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="D:/sentinel/sentinel_d2/src/jtools/jzlib/jzlib-1.1.2.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
