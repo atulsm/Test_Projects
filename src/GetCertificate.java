@@ -18,12 +18,11 @@ public class GetCertificate {
 	 */
 	public static void main(String[] args) throws Exception {
 		GetCertificate test = new GetCertificate();
-		System.out.println(test.getPublicCertificate("164.99.175.163", 8443));
-		System.out.println(test.getPublicCertificate("164.99.175.163", 10013));
+		System.out.println(test.getPublicCertificate("164.99.175.156", 8443));
 	}
 
 	public String getPublicCertificate(String host, int port) throws Exception {
-		SSLContext context = SSLContext.getInstance("TLS");
+		SSLContext context = SSLContext.getInstance("SSL");
 
 		SavingTrustManager tm = new SavingTrustManager();
 		context.init(null, new TrustManager[] { tm }, null);

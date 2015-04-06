@@ -1,11 +1,10 @@
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
 
 
-public class TestExecutor {
+public class TestExecutorWithLock {
 
 	private static int count = 0;
 	private ExecutorService exec = Executors.newSingleThreadExecutor();
@@ -16,7 +15,7 @@ public class TestExecutor {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		TestExecutor local = new TestExecutor();
+		TestExecutorWithLock local = new TestExecutorWithLock();
 		
 		while(true){
 			local.worker.setEvent("event" + count++);
