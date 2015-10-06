@@ -1,37 +1,21 @@
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.CyclicBarrier;
-
 
 public class TestCountDownLatch {
-
-	private static final CountDownLatch latch = new CountDownLatch(1);
-	private static CyclicBarrier barrier = new CyclicBarrier(2);
-
-	public static void main(String[] args) throws Exception{
-
-		System.out.println("Before Thread initialization");
-		new Thread(){
-			
-			public void run(){
-				while(true){
-					System.out.println("Bbefore await");
-					try{
-						barrier.await();
-					}catch(Exception e){
-						e.printStackTrace();
-					}
-					System.out.println("After await");
-				}
-			};
-			
-		}.start();
-		
-		Thread.sleep(5000);
-		System.out.println("After Sleep, about to call reset");
-		barrier.await();
-		barrier.reset();
-		Thread.sleep(10);
-		System.out.println("Done");
+	
+	public static void main(String[] args) {
+		final CountDownLatch startLatch = new CountDownLatch(1);
+		for (int threadNo = 0; threadNo < 4; threadNo++) {
+		  new Thread(){
+			  public void run() {
+				  try {
+					startLatch.await();
+					System.out.println(System.nanoTime());
+					
+				} catch (Exception e) {}
+			  };			  
+		  }.start();
+		}
+		startLatch.countDown();
 	}
 
 }
