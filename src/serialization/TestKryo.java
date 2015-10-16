@@ -50,13 +50,14 @@ public class TestKryo {
 		UserPojo someObject = null;
 		int i=0;
 		try{
-			while( (someObject = kryo.readObject(input, UserPojo.class)) != null){ // () != null){			
+			while(!input.eof()){// (someObject = kryo.readObject(input, UserPojo.class)) != null){ // () != null){	
+				someObject = kryo.readObject(input, UserPojo.class);
 				i++;
 			}
 		}catch(Exception e){
-			if(i != eventsToSerialize){
+			//if(i != eventsToSerialize){
 				System.out.println(e.getLocalizedMessage());
-			}
+			//}
 		}
 		input.close();
 		
