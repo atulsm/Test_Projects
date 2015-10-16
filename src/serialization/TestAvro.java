@@ -2,8 +2,11 @@ package serialization;
 
 import java.io.File;
 
+import org.apache.avro.file.DataFileReader;
 import org.apache.avro.file.DataFileWriter;
+import org.apache.avro.io.DatumReader;
 import org.apache.avro.io.DatumWriter;
+import org.apache.avro.specific.SpecificDatumReader;
 import org.apache.avro.specific.SpecificDatumWriter;
 
 import example.avro.User;
@@ -17,7 +20,8 @@ public class TestAvro {
 		
 		long start = System.currentTimeMillis();
 		DataFileWriter<User> dataFileWriter = new DataFileWriter<User>(userDatumWriter);
-		dataFileWriter.create(user2.getSchema(), new File("users1.avro"));
+		File file = new File("users1.avro");
+		dataFileWriter.create(user2.getSchema(),file );
 		dataFileWriter.append(user2);
 		dataFileWriter.append(user2);
 		
@@ -30,10 +34,24 @@ public class TestAvro {
 		dataFileWriter.close();
 		
 		long time = (System.currentTimeMillis() - start);
-		System.out.println("Took " + time + " ms at the rate of " + ((eventsToSerialize*1000)/time) + " eps"); 
+		System.out.println("Took " + time + " ms to serialize at the rate of " + ((eventsToSerialize*1000)/time) + " eps"); 
 		
 		
-
+		// Deserialize Users from disk
+		start = System.currentTimeMillis();
+		DatumReader<User> userDatumReader = new SpecificDatumReader<User>(User.class);
+		DataFileReader<User> dataFileReader = new DataFileReader<User>(file, userDatumReader);
+		User user = null;
+		while (dataFileReader.hasNext()) {
+		// Reuse user object by passing it to next(). This saves us from
+		// allocating and garbage collecting many objects for files with
+		// many items.
+			user = dataFileReader.next(user);
+		}
+		dataFileReader.close();
+		
+		time = (System.currentTimeMillis() - start);
+		System.out.println("Took " + time + " ms to deserialize at the rate of " + ((eventsToSerialize*1000)/time) + " eps"); 
 
 	}
 
