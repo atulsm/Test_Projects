@@ -9,7 +9,7 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import com.novell.sentinel.base64.Base64Utils;
+import esecurity.base.security.Base64;
 
 public class GetCertificate {
 
@@ -72,7 +72,7 @@ public class GetCertificate {
 		if (cert == null) {
 			throw new IllegalArgumentException("No certificate found");
 		}
-		String b64 = Base64Utils.encode(cert.getEncoded());
+		String b64 = new Base64().encode(cert.getEncoded());
 		StringBuilder sb = new StringBuilder();
 		sb.append(PEM_HEADER).append(b64).append(PEM_TRAILER);
 		return sb.toString();

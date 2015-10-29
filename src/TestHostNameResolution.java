@@ -1,7 +1,5 @@
 import java.net.InetAddress;
 
-import esecurity.ccs.comp.evtsrcmgt.connector.util.ConnectorUtil;
-
 public class TestHostNameResolution {
 
 	/**

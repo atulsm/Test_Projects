@@ -8,7 +8,7 @@ public class TestDB {
 	public static void main(String[] args) {
 
 		try {
-			Driver dr = new oracle.jdbc.OracleDriver();
+			Driver dr = null; //new oracle.jdbc.OracleDriver();
 			Properties props = new Properties();
 			props.put("user", "esecdba");
 			props.put("password", "esecdba");

@@ -1,45 +1,5 @@
 package sentinel;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import com.novell.db.object.bean.AlertBean;
-import com.novell.db.object.bean.AlertBeanMetaData;
-import com.novell.sentinel.client.bean.BeanSerializationException;
-import com.novell.sentinel.client.bean.field.BeanBooleanValue;
-import com.novell.sentinel.client.bean.field.BeanDateValue;
-import com.novell.sentinel.client.bean.field.BeanIntegerValue;
-import com.novell.sentinel.client.bean.field.BeanStringValue;
-import com.novell.sentinel.client.bean.field.BeanValue;
-import com.novell.sentinel.client.bean.java.BeanTransporterSync;
-import com.novell.sentinel.client.http.HttpException;
-import com.novell.sentinel.client.http.java.JSONHttpRequestorJavaSync;
-import com.novell.sentinel.client.tinyq.TinyQBuilder.InvalidExpressionTypeException;
-import com.novell.sentinel.client.tinyq.TinyQBuilder.InvalidOperandException;
-import com.novell.sentinel.json.JSONParseException;
-import com.novell.sentinel.json.java.BeanTransporterJSONSync;
-import com.novell.sentinel.uri.GenericURI;
-import com.novell.sentinel.uri.UriConstructorFactory;
-import com.novell.sentinel.uri.UriConstructorFactoryImpl;
-
-import esecurity.base.datamodel.attribute.EsecBoolean;
-import esecurity.base.datamodel.attribute.EsecDate;
-import esecurity.base.datamodel.attribute.EsecDouble;
-import esecurity.base.datamodel.attribute.EsecIP;
-import esecurity.base.datamodel.attribute.EsecInteger;
-import esecurity.base.datamodel.attribute.EsecLong;
-import esecurity.base.datamodel.attribute.EsecMAC;
-import esecurity.base.datamodel.attribute.EsecString;
-import esecurity.base.datamodel.attribute.EsecUuid;
-import esecurity.base.datamodel.attribute.EsecValue;
-import esecurity.base.metadata.AttributeMD;
-import esecurity.ccs.comp.event.JDBCEventStoreTest;
-import esecurity.db.object.Alert;
-import esecurity.db.object.AlertFactory;
-import esecurity.db.object.Event;
-
 public class TestAlertBean {
 	
 	public String protocol = "https";
@@ -48,7 +8,7 @@ public class TestAlertBean {
 	public String user = "admin";
 	public String password = "n";
 
-
+/*
 	private boolean initalized = false;
 	private BeanTransporterSync<AlertBean> alertTransporter;
 	private UriConstructorFactory uriFactory;
@@ -93,20 +53,7 @@ public class TestAlertBean {
 		}
 	}
 
-	/**
-	 * Create a synchronous HttpRequestor instance for demonstration use.
-	 * 
-	 * @param sentinelBaseURI
-	 *            A URI that addresses the Sentinel server via https.
-	 * @param userName
-	 *            The name of a Sentinel user account with admin privileges.
-	 * @param userPassword
-	 *            The password for the account.
-	 * @return A requestor instance that has been authenticated to the Sentinel
-	 *         server.
-	 * @throws HttpException
-	 *             if an error occurs during authentication.
-	 */
+
 	public static JSONHttpRequestorJavaSync createRequestor(
 			String sentinelBaseURI, String userName, String userPassword)
 			throws HttpException {
@@ -189,4 +136,5 @@ public class TestAlertBean {
 //		alertBean.setField("rv121", sentinelId);
 		alertTransporter.post(alertBean);
 	}
+	*/
 }

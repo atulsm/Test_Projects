@@ -20,12 +20,12 @@ import javax.net.ssl.X509TrustManager;
 
 public class Client {	
 	private static final Random rnd = new Random();
-	private static int EPS =10;
-	private static final int NUM_THREADS = 1; 
+	private static int EPS =1;
+	private static final int NUM_THREADS = 5; 
 	private static final int NUM_ES_PER_COLLECTOR = 1;
 
-	//private static final String SERVER = "192.168.1.4";
-	private static final String SERVER = "164.99.175.156";
+	//private static final String SERVER = "192.168.56.101";
+	private static final String SERVER = "164.99.175.165";
 	private static final int PORT = 1468;
 	private static final boolean ssl = false;
 	
@@ -43,7 +43,10 @@ public class Client {
 	
 	
 	private static final String[] msg = {	
-		"snort[4323]: [1:472:5] ICMP redirect host [Classification: Potentially Bad Traffic] [Priority: 2]: {ICMP} 41.66.0.0 -> 1.6.0.0 ", //Snort
+			"snort[4323]: [1:472:5] ICMP redirect host [Classification: Potentially Bad Traffic] [Priority: 2]: {ICMP} 41.66.0.0 -> 1.6.0.0 ", //Snort
+
+			"sshd[28817]: error: PAM: Authentication failure for user_tena1 from 23.16.0.1",		
+
 
 		"httpd: GET /tomcat.css HTTP/1.1 200 5926",
 		"kernel: SUSE Linux Enterprise Server 10 (x86_64)", //SUSE Collector	

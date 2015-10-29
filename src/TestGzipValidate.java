@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import com.jcraft.jzlib.GZIPInputStream;
+import java.util.zip.GZIPInputStream;
 
 public class TestGzipValidate {
 	public static void main(String[] args) throws Exception {

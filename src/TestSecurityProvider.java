@@ -4,7 +4,6 @@ import java.security.Security;
 
 import javax.crypto.Cipher;
 
-import com.sun.crypto.provider.AESCipher;
 import com.sun.crypto.provider.SunJCE;
 
 
@@ -25,7 +24,7 @@ public class TestSecurityProvider {
 			SunJCE sunJce = new SunJCE();
 			Object obj = sunJce.get("Cipher.DES/CBC/PKCS5Padding");
 			Object obj1 =  sunJce.getProperty("Cipher.AES");
-			AESCipher aes = new AESCipher();
+			//AESCipher aes = new AESCipher();
 			//System.out.println(sunJce.getServices());
 
 			sunJce.clear();

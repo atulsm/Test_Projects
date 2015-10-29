@@ -1,6 +1,5 @@
 import java.util.HashMap;
-
-import com.sun.tools.jdi.LinkedHashMap;
+import java.util.LinkedHashMap;
 
 
 public class TestHashmapjava8 {
