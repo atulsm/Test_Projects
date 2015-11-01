@@ -1,4 +1,4 @@
-package google_cj2015;
+package google_cj2015_qualifying;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

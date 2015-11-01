@@ -1,4 +1,4 @@
-package google_cj2015;
+package google_cj2015_qualifying;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -8,7 +8,13 @@ import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  
@@ -83,14 +89,64 @@ In Case #3, one diner starts with 4 pancakes and everyone else's plate is empty.
  * @author user
  *
  */
-public class ProblemB_InfinitePancakes_NotWorking {
+public class ProblemB_InfinitePancakes {
 
 		private static int T = 0;
 		private static PrintWriter out = null;
 		private static int maxPass = 0;
 		private static int total = 0;
+		
+		private static Map<Integer, Tup> map = new HashMap<>();
 
 		public static void main(String[] args) throws Exception{
+			map.put(1, new Tup(0,1,new int[]{1}));
+			map.put(2, new Tup(0,2,new int[]{1}));
+			map.put(3, new Tup(0,3,new int[]{2,1}));
+//			map.put(4, new Tup(2,2));
+//			map.put(5, new Tup(2,3));
+			
+			
+			for(int i=1;i<10;i++){
+				System.out.println(i + ":" + best(i));
+			}		
+		}
+
+		private static Tup best(int num){
+			Tup val = map.get(num);
+			if(val != null){
+				return val;
+			}
+			
+			int best = 10000;
+			int pos = 0;
+			
+			for(int i=1;i<num-1;i++){
+				Tup first = map.get(i);
+				Tup last = map.get(num-i);
+				
+				int pass = first.pass + last.pass;
+				if(first.reduce==0 && first.pass==last.pass){
+					pass = first.pass;
+				}
+				
+				if(pass < best){
+					best = pass;
+					pos = i;
+				}				
+			}
+			
+			Tup first = map.get(pos);
+			Tup last = map.get(num-pos);
+			HashSet set = new HashSet(first.elements);
+			set.addAll(last.elements);
+			
+			Tup newTup = new Tup(pos, best+1,set);
+			map.put(num, newTup);
+			
+			return newTup;
+		}
+		
+		public static void main1(String[] args) throws Exception{
 			List<String> input = readFile("src/google_cj2015/inputb");		
 			out = new PrintWriter(new BufferedWriter(new FileWriter("out.txt")));
 			
@@ -237,6 +293,38 @@ public class ProblemB_InfinitePancakes_NotWorking {
 		
 		private static class IntHolder{
 			int i;
+		}
+		
+		private static class Tup{
+			Tup(int i, int j,int[] contents){
+				reduce = i;
+				pass = j;
+				this.elements=new HashSet<Integer>();
+				for(int val : contents){
+					elements.add(val);
+				}
+				
+			}
+			
+			Tup(int i, int j,HashSet contents){
+				reduce = i;
+				pass = j;
+				this.elements=contents;			}
+			
+			int reduce;
+			int pass;
+			Set<Integer> elements;
+			
+			@Override
+			public String toString() {
+				return reduce+","+pass;
+			}
+			
+			@Override
+			public boolean equals(Object obj) {
+				Tup comp = (Tup)obj;
+				return reduce==comp.reduce && pass==comp.pass ;
+			}
 		}
 
 	}

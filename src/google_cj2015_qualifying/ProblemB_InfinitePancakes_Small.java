@@ -1,4 +1,4 @@
-package google_cj2015;
+package google_cj2015_qualifying;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -83,7 +83,7 @@ In Case #3, one diner starts with 4 pancakes and everyone else's plate is empty.
  * @author user
  *
  */
-public class ProblemB_InfinitePancakes1 {
+public class ProblemB_InfinitePancakes_Small {
 
 		private static int T = 0;
 		private static PrintWriter out = null;
@@ -102,6 +102,7 @@ public class ProblemB_InfinitePancakes1 {
 		}
 		
 		private static void process(String dinerCount,String in, int t){
+			long start = System.currentTimeMillis();
 			String[] ins = in.split(" ");
 
 			List<Integer> diners = new ArrayList<>();
@@ -109,8 +110,10 @@ public class ProblemB_InfinitePancakes1 {
 				diners.add(Integer.parseInt(diner));
 			}		
 			
-			int pass = pass(diners,0,true);		
-			out.println("Case #"+t+": " + pass);		
+			int pass = pass(diners,0);		
+			out.println("Case #"+t+": " + pass);
+			System.out.println("Processing " + t + " took " + (System.currentTimeMillis() - start));
+
 		}
 		
 		/**
@@ -119,45 +122,42 @@ public class ProblemB_InfinitePancakes1 {
 		 * 
 		 * @return
 		 */
-		private static int pass(List<Integer> diners, int pass,boolean print){					
+		private static int pass(List<Integer> diners, int pass){
+			System.out.println(pass);
 			int pos = findLargest(diners, false);
 			int largest = diners.get(pos);
-			
-			List<Integer> moveList = new ArrayList<>(diners);
-			if(largest > 3){
-				int newLarge = largest/2;
-				moveList.set(pos, newLarge);
-				moveList.add(largest - newLarge);
-			}else{
-				if(print){
-					System.out.println(pass+largest);
-				}
+			if(largest<=3){
 				return pass + largest;
 			}
 			
+			//option1
 			List<Integer> dinersCopy = new ArrayList<>(diners);
-			List<Integer> moveListCopy = new ArrayList<>(moveList);
-			
 			findLargest(dinersCopy, true);
-			dinersCopy = new ArrayList<>(dinersCopy);
+			int option1 = pass(dinersCopy,pass+1);
 			
-			int eatpass = pass(dinersCopy,pass+1,false);
-			int movepass = pass(moveListCopy,pass+1,false); 
-			
-			if(movepass < eatpass){
-				if(print){
-					System.out.println("Move: " + diners);
-					moveListCopy = new ArrayList<>(moveList);
-					pass(moveListCopy,pass+1,true);
-				}
-				return movepass;
-			}else{
-				if(print){
-					System.out.println("eat: " + diners);
-					pass(dinersCopy,pass+1,true);
-				}
-				return eatpass;
+			//option2
+			List<Integer> moveList = new ArrayList<>(diners);
+			int newLarge = largest-3;
+			moveList.set(pos, newLarge);
+			moveList.add(largest - newLarge);
+			int option2 = pass(moveList,pass+1);
+
+			//option 3
+			moveList = new ArrayList<>(diners);
+			newLarge = largest/2;
+			moveList.set(pos, newLarge);
+			moveList.add(largest - newLarge);
+			int option3 = pass(moveList,pass+1);
+					
+			int small = option1;
+			if(option2 < small){
+				small = option2;
 			}
+			if(option3 < small){
+				small = option3;
+			}
+			
+			return small;
 		}
 		
 		/**

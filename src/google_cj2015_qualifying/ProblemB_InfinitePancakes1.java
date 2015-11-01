@@ -1,4 +1,4 @@
-package google_cj2015;
+package google_cj2015_qualifying;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -8,13 +8,7 @@ import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  
@@ -89,64 +83,12 @@ In Case #3, one diner starts with 4 pancakes and everyone else's plate is empty.
  * @author user
  *
  */
-public class ProblemB_InfinitePancakes {
+public class ProblemB_InfinitePancakes1 {
 
 		private static int T = 0;
 		private static PrintWriter out = null;
-		private static int maxPass = 0;
-		private static int total = 0;
-		
-		private static Map<Integer, Tup> map = new HashMap<>();
 
 		public static void main(String[] args) throws Exception{
-			map.put(1, new Tup(0,1,new int[]{1}));
-			map.put(2, new Tup(0,2,new int[]{1}));
-			map.put(3, new Tup(0,3,new int[]{2,1}));
-//			map.put(4, new Tup(2,2));
-//			map.put(5, new Tup(2,3));
-			
-			
-			for(int i=1;i<10;i++){
-				System.out.println(i + ":" + best(i));
-			}		
-		}
-
-		private static Tup best(int num){
-			Tup val = map.get(num);
-			if(val != null){
-				return val;
-			}
-			
-			int best = 10000;
-			int pos = 0;
-			
-			for(int i=1;i<num-1;i++){
-				Tup first = map.get(i);
-				Tup last = map.get(num-i);
-				
-				int pass = first.pass + last.pass;
-				if(first.reduce==0 && first.pass==last.pass){
-					pass = first.pass;
-				}
-				
-				if(pass < best){
-					best = pass;
-					pos = i;
-				}				
-			}
-			
-			Tup first = map.get(pos);
-			Tup last = map.get(num-pos);
-			HashSet set = new HashSet(first.elements);
-			set.addAll(last.elements);
-			
-			Tup newTup = new Tup(pos, best+1,set);
-			map.put(num, newTup);
-			
-			return newTup;
-		}
-		
-		public static void main1(String[] args) throws Exception{
 			List<String> input = readFile("src/google_cj2015/inputb");		
 			out = new PrintWriter(new BufferedWriter(new FileWriter("out.txt")));
 			
@@ -160,7 +102,6 @@ public class ProblemB_InfinitePancakes {
 		}
 		
 		private static void process(String dinerCount,String in, int t){
-			long start = System.currentTimeMillis();
 			String[] ins = in.split(" ");
 
 			List<Integer> diners = new ArrayList<>();
@@ -168,13 +109,8 @@ public class ProblemB_InfinitePancakes {
 				diners.add(Integer.parseInt(diner));
 			}		
 			
-			int pos = findLargest(diners, false,null);
-			maxPass = diners.get(pos);
-			
-			int pass = pass(diners,0);		
-			out.println("Case #"+t+": " + pass);
-			System.out.println("Processing " + t + " took " + (System.currentTimeMillis() - start) + " and recursions " + total);
-
+			int pass = pass(diners,0,true);		
+			out.println("Case #"+t+": " + pass);		
 		}
 		
 		/**
@@ -183,74 +119,56 @@ public class ProblemB_InfinitePancakes {
 		 * 
 		 * @return
 		 */
-		private static int pass(List<Integer> diners, int pass){
-			total++;
-			System.out.println(pass);
-			if(pass > (maxPass-2)){
-				return pass + 100;
-			}
-			
-			IntHolder avg = new IntHolder();
-			int pos = findLargest(diners, false,avg);
+		private static int pass(List<Integer> diners, int pass,boolean print){					
+			int pos = findLargest(diners, false);
 			int largest = diners.get(pos);
-			if(largest<=3){
-				int ret = pass + largest;
-				if(maxPass > ret){
-					maxPass = ret;
-				}				
-				return ret;
-			}
-	
-			double diff = (double)avg.i/(double)largest;
-			if(diff < 0){			
-				List<Integer> moveList = new ArrayList<>(diners);
+			
+			List<Integer> moveList = new ArrayList<>(diners);
+			if(largest > 3){
 				int newLarge = largest/2;
 				moveList.set(pos, newLarge);
 				moveList.add(largest - newLarge);
-				return pass(moveList,pass+1);
+			}else{
+				if(print){
+					System.out.println(pass+largest);
+				}
+				return pass + largest;
 			}
 			
-			//option1
 			List<Integer> dinersCopy = new ArrayList<>(diners);
-			findLargest(dinersCopy, true,null);
-			int option1 = pass(dinersCopy,pass+1);
+			List<Integer> moveListCopy = new ArrayList<>(moveList);
 			
-			//option2
-			List<Integer> moveList = new ArrayList<>(diners);
-			int newLarge = largest-3;
-			moveList.set(pos, newLarge);
-			moveList.add(largest - newLarge);
-			int option2 = pass(moveList,pass+1);
-
-			//option 3
-			moveList = new ArrayList<>(diners);
-			newLarge = largest/2;
-			moveList.set(pos, newLarge);
-			moveList.add(largest - newLarge);
-			int option3 = pass(moveList,pass+1);
-					
-			int small = option1;
-			if(option2 < small){
-				small = option2;
-			}
-			if(option3 < small){
-				small = option3;
-			}
+			findLargest(dinersCopy, true);
+			dinersCopy = new ArrayList<>(dinersCopy);
 			
-			return small;
+			int eatpass = pass(dinersCopy,pass+1,false);
+			int movepass = pass(moveListCopy,pass+1,false); 
+			
+			if(movepass < eatpass){
+				if(print){
+					System.out.println("Move: " + diners);
+					moveListCopy = new ArrayList<>(moveList);
+					pass(moveListCopy,pass+1,true);
+				}
+				return movepass;
+			}else{
+				if(print){
+					System.out.println("eat: " + diners);
+					pass(dinersCopy,pass+1,true);
+				}
+				return eatpass;
+			}
 		}
 		
 		/**
 		 * Eat and return the largest left
 		 */
-		private static int findLargest(List<Integer> diners,boolean reduce,IntHolder average){
+		private static int findLargest(List<Integer> diners,boolean reduce){
 			int largest = 0;
 			int pos = 0;
-			int total = 0;
 			
 			for(int i=0;i<diners.size();i++){
 				Integer din = diners.get(i);
-				total+=din;
 				
 				if(din > largest){
 					largest = din;
@@ -261,10 +179,6 @@ public class ProblemB_InfinitePancakes {
 					diners.set(i, --din);
 				}
 			}
-			if(average!= null){
-				average.i = total/diners.size();
-			}
-			
 			return pos;
 		}
 		
@@ -289,42 +203,6 @@ public class ProblemB_InfinitePancakes {
 			br.close();
 			
 			return ret;
-		}
-		
-		private static class IntHolder{
-			int i;
-		}
-		
-		private static class Tup{
-			Tup(int i, int j,int[] contents){
-				reduce = i;
-				pass = j;
-				this.elements=new HashSet<Integer>();
-				for(int val : contents){
-					elements.add(val);
-				}
-				
-			}
-			
-			Tup(int i, int j,HashSet contents){
-				reduce = i;
-				pass = j;
-				this.elements=contents;			}
-			
-			int reduce;
-			int pass;
-			Set<Integer> elements;
-			
-			@Override
-			public String toString() {
-				return reduce+","+pass;
-			}
-			
-			@Override
-			public boolean equals(Object obj) {
-				Tup comp = (Tup)obj;
-				return reduce==comp.reduce && pass==comp.pass ;
-			}
 		}
 
 	}

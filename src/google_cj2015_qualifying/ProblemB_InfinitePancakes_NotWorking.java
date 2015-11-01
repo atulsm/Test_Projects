@@ -1,4 +1,4 @@
-package google_cj2015;
+package google_cj2015_qualifying;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -83,10 +83,12 @@ In Case #3, one diner starts with 4 pancakes and everyone else's plate is empty.
  * @author user
  *
  */
-public class ProblemB_InfinitePancakes_Small {
+public class ProblemB_InfinitePancakes_NotWorking {
 
 		private static int T = 0;
 		private static PrintWriter out = null;
+		private static int maxPass = 0;
+		private static int total = 0;
 
 		public static void main(String[] args) throws Exception{
 			List<String> input = readFile("src/google_cj2015/inputb");		
@@ -110,9 +112,12 @@ public class ProblemB_InfinitePancakes_Small {
 				diners.add(Integer.parseInt(diner));
 			}		
 			
+			int pos = findLargest(diners, false,null);
+			maxPass = diners.get(pos);
+			
 			int pass = pass(diners,0);		
 			out.println("Case #"+t+": " + pass);
-			System.out.println("Processing " + t + " took " + (System.currentTimeMillis() - start));
+			System.out.println("Processing " + t + " took " + (System.currentTimeMillis() - start) + " and recursions " + total);
 
 		}
 		
@@ -123,16 +128,35 @@ public class ProblemB_InfinitePancakes_Small {
 		 * @return
 		 */
 		private static int pass(List<Integer> diners, int pass){
+			total++;
 			System.out.println(pass);
-			int pos = findLargest(diners, false);
+			if(pass > (maxPass-2)){
+				return pass + 100;
+			}
+			
+			IntHolder avg = new IntHolder();
+			int pos = findLargest(diners, false,avg);
 			int largest = diners.get(pos);
 			if(largest<=3){
-				return pass + largest;
+				int ret = pass + largest;
+				if(maxPass > ret){
+					maxPass = ret;
+				}				
+				return ret;
+			}
+	
+			double diff = (double)avg.i/(double)largest;
+			if(diff < 0){			
+				List<Integer> moveList = new ArrayList<>(diners);
+				int newLarge = largest/2;
+				moveList.set(pos, newLarge);
+				moveList.add(largest - newLarge);
+				return pass(moveList,pass+1);
 			}
 			
 			//option1
 			List<Integer> dinersCopy = new ArrayList<>(diners);
-			findLargest(dinersCopy, true);
+			findLargest(dinersCopy, true,null);
 			int option1 = pass(dinersCopy,pass+1);
 			
 			//option2
@@ -163,12 +187,14 @@ public class ProblemB_InfinitePancakes_Small {
 		/**
 		 * Eat and return the largest left
 		 */
-		private static int findLargest(List<Integer> diners,boolean reduce){
+		private static int findLargest(List<Integer> diners,boolean reduce,IntHolder average){
 			int largest = 0;
 			int pos = 0;
+			int total = 0;
 			
 			for(int i=0;i<diners.size();i++){
 				Integer din = diners.get(i);
+				total+=din;
 				
 				if(din > largest){
 					largest = din;
@@ -179,6 +205,10 @@ public class ProblemB_InfinitePancakes_Small {
 					diners.set(i, --din);
 				}
 			}
+			if(average!= null){
+				average.i = total/diners.size();
+			}
+			
 			return pos;
 		}
 		
@@ -203,6 +233,10 @@ public class ProblemB_InfinitePancakes_Small {
 			br.close();
 			
 			return ret;
+		}
+		
+		private static class IntHolder{
+			int i;
 		}
 
 	}
