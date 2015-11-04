@@ -18,24 +18,24 @@ import scala.Tuple2;
 import com.google.common.collect.Lists;
 
 /**
- * read from a folder.
- * Keep adding new file with data into the folder specified.
+ * Counts words in UTF8 encoded, '\n' delimited text received from the network every second.
+ *
+ * To run this on your local machine, you need to first run a Netcat server
+ *   ncat -4lk localhost 9999
+ *   
+ * and then run the example
  */
-public final class Streaming101 {
+public final class Streaming102 {
   private static final Pattern SPACE = Pattern.compile(" ");
 
   public static void main(String[] args) {
 
     // Create the context with a 1 second batch size
-    SparkConf sparkConf = new SparkConf().setMaster("local[*]").setAppName("Streaming102");
+    SparkConf sparkConf = new SparkConf().setMaster("local[*]").setAppName("Streaming101");
     JavaStreamingContext ssc = new JavaStreamingContext(sparkConf, Durations.seconds(10));
 
-    String folder = "./streamdata";
-    if(args.length == 1){
-    	folder = args[0];
-    }
 
-    JavaDStream<String> lines = ssc.textFileStream(folder);
+    JavaReceiverInputDStream<String> lines = ssc.socketTextStream("localhost",9999, StorageLevels.MEMORY_AND_DISK_SER);
     JavaDStream<String> words = lines.flatMap(new FlatMapFunction<String, String>() {
       @Override
       public Iterable<String> call(String x) {
