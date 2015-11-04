@@ -1,4 +1,4 @@
-package load;
+package dbloadtest;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
