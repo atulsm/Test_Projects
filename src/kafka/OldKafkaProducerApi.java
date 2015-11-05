@@ -6,7 +6,7 @@ import kafka.javaapi.producer.Producer;
 import kafka.producer.KeyedMessage;
 import kafka.producer.ProducerConfig;
  
-public class TestProducer {
+public class OldKafkaProducerApi {
     public static void main(String[] args) {
         long events = 10;
         Random rnd = new Random();
