@@ -9,6 +9,7 @@ import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.io.ImmutableBytesWritable;
 import org.apache.hadoop.hbase.mapreduce.TableInputFormat;
+import org.apache.spark.HashPartitioner;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
@@ -55,7 +56,7 @@ public class HbaseReadTimeSeries {
 	public static void main(String[] args) throws Exception {
 
 		SparkConf sparkConf = new SparkConf();
-		sparkConf.setMaster("local");
+		//sparkConf.setMaster("local");
 		sparkConf.setAppName("TestSpark");		
 		JavaSparkContext jsc = new JavaSparkContext(sparkConf);
 
@@ -63,10 +64,13 @@ public class HbaseReadTimeSeries {
 		Configuration hbaseConfig = initializeHBaseConfig();
 		long start = System.currentTimeMillis();		
 		
-		hbaseConfig.set(TableInputFormat.SCAN_TIMERANGE_START, "1444194420157");
+		//hbaseConfig.set(TableInputFormat.SCAN_TIMERANGE_START, "1444194420157");
+		hbaseConfig.set(TableInputFormat.SCAN_TIMERANGE_START, "0");
 		hbaseConfig.set(TableInputFormat.SCAN_TIMERANGE_END, "1444194520157");
 		
-		JavaPairRDD<ImmutableBytesWritable, Result> rdd = jsc.newAPIHadoopRDD(hbaseConfig, TableInputFormat.class, ImmutableBytesWritable.class, Result.class);		
+		JavaPairRDD<ImmutableBytesWritable, Result> rdd = jsc.newAPIHadoopRDD(hbaseConfig, TableInputFormat.class, ImmutableBytesWritable.class, Result.class);
+		rdd.partitionBy(new HashPartitioner(10));
+		
 		JavaRDD<Map<String,String>> events = rdd.map(new Function<Tuple2<ImmutableBytesWritable, Result>, Map<String,String>>() {
 			@Override
 			public Map<String,String> call(Tuple2<ImmutableBytesWritable, Result> rowData) throws Exception {
@@ -74,6 +78,7 @@ public class HbaseReadTimeSeries {
 				return ev.valueMap;
 			}
 		});
+		events.repartition(10);
 		
 		JavaRDD<Map<String,String>> persist = events.persist(StorageLevel.MEMORY_AND_DISK_2());		
 		long total  = persist.count();		

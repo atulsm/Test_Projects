@@ -12,14 +12,43 @@ import org.apache.kafka.common.record.Records;
 import org.apache.kafka.common.serialization.ByteArraySerializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 
-public class ProducerPerformance {
-    public static void main(String[] args) throws Exception {
+public class ProducerPerformance2 extends Thread{
+	
+	private String[] args;
+	private static final int CLIENT_COUNT=1;
+	
+	public ProducerPerformance2(String args[]){
+		this.args = args;
+	}
+	
+	public static void main(String[] args) throws Exception {
         if (args.length != 3) {
-            System.err.println("USAGE: java " + ProducerPerformance.class.getName() + " url num_records record_size");
+            System.err.println("USAGE: java " + ProducerPerformance2.class.getName() + " url num_records record_size");
             System.exit(1);
         }
-        String url = args[0];
         int numRecords = Integer.parseInt(args[1]);
+        int recordSize = Integer.parseInt(args[2]);
+        long start = System.currentTimeMillis();
+
+        ProducerPerformance2 ins[] = new  ProducerPerformance2[CLIENT_COUNT];
+        for(int i =0;i<ins.length;i++){
+        	ins[i] = new ProducerPerformance2(args);
+        	ins[i].start();
+        }
+
+        for(int i =0;i<ins.length;i++){
+           	ins[i].join();
+        }
+                       
+        long ellapsed = System.currentTimeMillis() - start;
+        double msgsSec = 1000.0 * numRecords / (double) ellapsed;
+        double mbSec = msgsSec * (recordSize + Records.LOG_OVERHEAD) / (1024.0 * 1024.0);
+        System.out.printf("%d records sent in %d ms ms. %.2f records per second (%.2f mb/sec).", numRecords, ellapsed, msgsSec, mbSec);
+	}
+	
+    public void run() {
+        String url = args[0];
+        int numRecords = Integer.parseInt(args[1])/CLIENT_COUNT;
         int recordSize = Integer.parseInt(args[2]);
         Properties props = new Properties();
         props.setProperty(ProducerConfig.ACKS_CONFIG, "0");
@@ -40,7 +69,6 @@ public class ProducerPerformance {
         byte[] payload = new byte[recordSize];
         Arrays.fill(payload, (byte) 1);
         ProducerRecord<String, byte[]> record = new ProducerRecord<String, byte[]>("loadtest", payload);
-        long start = System.currentTimeMillis();
         long maxLatency = -1L;
         long totalLatency = 0;
         int reportingInterval = 1000000;
@@ -60,10 +88,6 @@ public class ProducerPerformance {
                 maxLatency = -1L;
             }
         }
-        long ellapsed = System.currentTimeMillis() - start;
-        double msgsSec = 1000.0 * numRecords / (double) ellapsed;
-        double mbSec = msgsSec * (recordSize + Records.LOG_OVERHEAD) / (1024.0 * 1024.0);
-        System.out.printf("%d records sent in %d ms ms. %.2f records per second (%.2f mb/sec).", numRecords, ellapsed, msgsSec, mbSec);
         producer.close();
     }
 }
