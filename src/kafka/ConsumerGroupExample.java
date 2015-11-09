@@ -1,5 +1,6 @@
 package kafka;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
 
 import kafka.consumer.ConsumerConfig;
 import kafka.consumer.ConsumerIterator;
@@ -17,6 +19,9 @@ public class ConsumerGroupExample {
     private final ConsumerConnector consumer;
     private final String topic;
     private  ExecutorService executor;
+    
+    public AtomicLong total = new AtomicLong(5000000);
+    private static long start = System.currentTimeMillis();
  
     public ConsumerGroupExample(String a_zookeeper, String a_groupId, String a_topic) {
         consumer = kafka.consumer.Consumer.createJavaConsumerConnector(
@@ -25,6 +30,9 @@ public class ConsumerGroupExample {
     }
  
     public void shutdown() {
+    	long sec =(System.currentTimeMillis()-start)/1000;
+    	System.out.println("Total EPS = " + 5000000/sec);
+    	
         if (consumer != null) consumer.shutdown();
         if (executor != null) executor.shutdown();
         try {
@@ -53,6 +61,7 @@ public class ConsumerGroupExample {
             executor.submit(new ConsumerTest(stream, threadNumber));
             threadNumber++;
         }
+        start = System.currentTimeMillis();
     }
  
     private static ConsumerConfig createConsumerConfig(String a_zookeeper, String a_groupId) {
@@ -76,28 +85,42 @@ public class ConsumerGroupExample {
         ConsumerGroupExample example = new ConsumerGroupExample(zooKeeper, groupId, topic);
         example.run(threads);
  
+        /*
         try {
             Thread.sleep(10000);
         } catch (InterruptedException ie) {
  
         }
         example.shutdown();
+        */
+    }
+    
+    
+    class ConsumerTest implements Runnable {
+        private KafkaStream m_stream;
+        private int m_threadNumber;
+     
+        public ConsumerTest(KafkaStream a_stream, int a_threadNumber) {
+            m_threadNumber = a_threadNumber;
+            m_stream = a_stream;
+        }
+     
+        public void run() {
+            ConsumerIterator<byte[], byte[]> it = m_stream.iterator();
+            while (it.hasNext()){
+                //System.out.println("Thread " + m_threadNumber + ": " + new String(it.next().message()));
+            	it.next();
+            	
+            	if(total.decrementAndGet() <= 0 ){
+            		shutdown();
+            	}
+            	
+            	if(total.get() % 10000 == 0){
+            		System.out.println(new Date() + " Read " + total.get() + " more");
+            	}
+            }
+            System.out.println("Shutting down Thread: " + m_threadNumber);
+        }
     }
 }
 
-class ConsumerTest implements Runnable {
-    private KafkaStream m_stream;
-    private int m_threadNumber;
- 
-    public ConsumerTest(KafkaStream a_stream, int a_threadNumber) {
-        m_threadNumber = a_threadNumber;
-        m_stream = a_stream;
-    }
- 
-    public void run() {
-        ConsumerIterator<byte[], byte[]> it = m_stream.iterator();
-        while (it.hasNext())
-            System.out.println("Thread " + m_threadNumber + ": " + new String(it.next().message()));
-        System.out.println("Shutting down Thread: " + m_threadNumber);
-    }
-}
