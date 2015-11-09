@@ -68,17 +68,21 @@
 			<artifactId>hbase-common</artifactId>
 			<version>1.0.0-cdh5.4.4</version>
 		</dependency>
+		
+		<!-- 
 		<dependency>
 			<groupId>org.apache.hbase</groupId>
 			<artifactId>hbase-client</artifactId>
 			<version>1.0.0-cdh5.4.4</version>
 		</dependency>
+		-->
+		
 		<dependency>
 			<groupId>org.apache.hbase</groupId>
 			<artifactId>hbase-server</artifactId>
 			<version>1.0.0-cdh5.4.4</version>
 		</dependency>
-        
+         
         
         
 		<dependency>
@@ -128,6 +132,25 @@
 	    <target>1.8</target>
 	  </configuration>
 	</plugin>
+
+	<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+
+							<!-- Additional configuration. -->
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>	
+	
+	
 	</plugins>
     <pluginManagement>
     	<plugins>
