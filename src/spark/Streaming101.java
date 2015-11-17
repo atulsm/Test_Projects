@@ -27,10 +27,12 @@ public final class Streaming101 {
   public static void main(String[] args) {
 
     // Create the context with a 1 second batch size
-    SparkConf sparkConf = new SparkConf().setMaster("local[*]").setAppName("Streaming102");
+    //SparkConf sparkConf = new SparkConf().setMaster("local[*]").setAppName("Streaming102");
+	SparkConf sparkConf = new SparkConf().setMaster("spark://10.204.100.206:7077").setAppName("Streaming102");
+	sparkConf.setJars(new String[] { "target\\original-TestProjects-1.0-SNAPSHOT.jar" });
     JavaStreamingContext ssc = new JavaStreamingContext(sparkConf, Durations.seconds(10));
 
-    String folder = "./streamdata";
+    String folder = "./stream/";
     if(args.length == 1){
     	folder = args[0];
     }
