@@ -25,7 +25,7 @@ public class Spark101 {
 	public static void main(String[] args) {
 		
 		SparkConf sparkConf = new SparkConf();
-		sparkConf.setMaster("local");
+		//sparkConf.setMaster("local");
 		sparkConf.setAppName("TestSpark");
 		
 		JavaSparkContext sc = new JavaSparkContext(sparkConf);

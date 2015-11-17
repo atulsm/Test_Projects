@@ -26,11 +26,13 @@ public class Spark102 {
 		
 		SparkConf sparkConf = new SparkConf();
 		//sparkConf.setMaster("local");
-		sparkConf.setMaster("spark://sentinel-dev-23.labs.blr.novell.com:7077");
+		sparkConf.setMaster("spark://10.204.100.206:7077");
+		//sparkConf.setMaster("spark://idcdvstl224:7077");
 		sparkConf.setAppName("TestSpark");
 		
-		//sparkConf.setJars(new String[] { "target\\TestProjects-1.0-SNAPSHOT.jar" });		
-		//sparkConf.set(key, value)
+		//sparkConf.setJars(new String[] { "target\\original-TestProjects-1.0-SNAPSHOT.jar" });
+		
+		//sparkConf.set("spark.driver.host", "IND-SATUL.microfocus.com");
 				
 		JavaSparkContext sc = new JavaSparkContext(sparkConf);
 		JavaRDD<String> input = sc.parallelize(data);
