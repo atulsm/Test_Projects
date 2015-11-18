@@ -10,23 +10,24 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
+import eventsimulator.ObjectSerializer;
 import kafka.consumer.ConsumerConfig;
 import kafka.consumer.ConsumerIterator;
 import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
  
-public class ConsumerGroupExample {
-    private static final int COUNT = 500000;
-	private final ConsumerConnector consumer;
+public class KafkaEventConsumer {
+    private final ConsumerConnector consumer;
     private final String topic;
     private  ExecutorService executor;
     
-    public AtomicLong total = new AtomicLong(0);
+    public AtomicLong total = new AtomicLong(5000000);
     public AtomicLong tStart = new AtomicLong(0);
+
     
     private static long start = System.currentTimeMillis();
  
-    public ConsumerGroupExample(String a_zookeeper, String a_groupId, String a_topic) {
+    public KafkaEventConsumer(String a_zookeeper, String a_groupId, String a_topic) {
         consumer = kafka.consumer.Consumer.createJavaConsumerConnector(
                 createConsumerConfig(a_zookeeper, a_groupId));
         this.topic = a_topic;
@@ -34,7 +35,7 @@ public class ConsumerGroupExample {
  
     public void shutdown() {
     	long sec =(System.currentTimeMillis()-start)/1000;
-    	System.out.println("Total EPS = " + COUNT/sec);
+    	System.out.println("Total EPS = " + 5000000/sec);
     	
         if (consumer != null) consumer.shutdown();
         if (executor != null) executor.shutdown();
@@ -69,10 +70,10 @@ public class ConsumerGroupExample {
  
     private static ConsumerConfig createConsumerConfig(String a_zookeeper, String a_groupId) {
         Properties props = new Properties();
-        props.put("zookeeper.connect", a_zookeeper);
+        props.put("zookeeper.connect", a_zookeeper); 
         props.put("group.id", a_groupId);
         props.put("zookeeper.session.timeout.ms", "4000");
-        props.put("zookeeper.sync.time.ms", "200");
+        props.put("zookeeper.sync.time.ms", "2000");
         props.put("auto.commit.interval.ms", "1000");
         props.put("auto.offset.reset", "smallest");
  
@@ -85,7 +86,7 @@ public class ConsumerGroupExample {
         String topic = args[2];
         int threads = Integer.parseInt(args[3]);
  
-        ConsumerGroupExample example = new ConsumerGroupExample(zooKeeper, groupId, topic);
+        KafkaEventConsumer example = new KafkaEventConsumer(zooKeeper, groupId, topic);
         example.run(threads);
  
         /*
@@ -109,17 +110,18 @@ public class ConsumerGroupExample {
             tStart.set(System.currentTimeMillis());
         }
      
-        
         public void run() {
             ConsumerIterator<byte[], byte[]> it = m_stream.iterator();
             while (it.hasNext()){
-                //System.out.println("Thread " + m_threadNumber + ": " + new String(it.next().message()));
-            	it.next();
-            	           	
+            	byte[] eventBytes = it.next().message();
+            	Object event = ObjectSerializer.getEvent(eventBytes);
+            	//System.out.println(event);
+            	            	
             	if(total.incrementAndGet() % 100000 == 0){
             		long sec = (System.currentTimeMillis() - tStart.get())/1000;
             		System.out.println(new Date() + " EPS " + 100000/sec);
             		tStart.set(System.currentTimeMillis());
+            		System.out.println(event);
             	}
             }
             System.out.println("Shutting down Thread: " + m_threadNumber);
