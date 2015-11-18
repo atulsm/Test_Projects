@@ -14,13 +14,12 @@ import org.apache.spark.api.java.function.Function;
 import org.apache.spark.streaming.Durations;
 import org.apache.spark.streaming.api.java.JavaDStream;
 import org.apache.spark.streaming.api.java.JavaPairInputDStream;
-import org.apache.spark.streaming.api.java.JavaPairReceiverInputDStream;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
 import org.apache.spark.streaming.kafka.KafkaUtils;
+import org.elasticsearch.spark.rdd.api.java.JavaEsSpark;
 
 import eventsimulator.ObjectSerializer;
 import kafka.serializer.DefaultDecoder;
-import kafka.serializer.StringDecoder;
 import scala.Tuple2;
 
 /**
@@ -41,6 +40,10 @@ public final class StreamingKafkaDirectEvent {
 	  //sparkConf.setExecutorEnv("spark.executor.memory", "8G");
 	  sparkConf.set("spark.executor.memory", "4G");
 	  //sparkConf.set("executor-memory", "8G");
+	  
+	  //for elasticsearch
+	  sparkConf.set("es.nodes", "10.204.102.200");
+	  sparkConf.set("es.index.auto.create", "true");
 		
 	  JavaStreamingContext ssc = new JavaStreamingContext(sparkConf, Durations.seconds(2));
 	
@@ -74,8 +77,17 @@ public final class StreamingKafkaDirectEvent {
 		  public Void call(JavaRDD<Map<String,String>> rdd) throws Exception {
 			  long count = rdd.count();
 			  System.out.println(new Date() + "  Total records read: " +count );
-			  if(count>0)
+			  if(count>0){
 				  System.out.println(rdd.first());
+			  
+			  
+			  try {
+					JavaEsSpark.saveToEs(rdd, "events2/event");
+				}
+				catch(Exception es) {
+					es.printStackTrace();
+				}
+			  }
 			  return null;
 		  }
 	  });
