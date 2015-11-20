@@ -23,7 +23,7 @@ public class ThrottledKafkaEventProducer extends Thread{
 	
 	private String[] args;
 	private static final int CLIENT_COUNT=1;
-	public static final RateLimiter limiter = RateLimiter.create(20000);
+	public static RateLimiter limiter;
 	private static int recordSize=1000;
 	
 	public ThrottledKafkaEventProducer(String args[]){
@@ -31,10 +31,14 @@ public class ThrottledKafkaEventProducer extends Thread{
 	}
 	
 	public static void main(String[] args) throws Exception {
-        if (args.length != 2) {
-            System.err.println("USAGE: java " + ThrottledKafkaEventProducer.class.getName() + " url num_records");
+        if (args.length != 3) {
+            System.err.println("USAGE: java " + ThrottledKafkaEventProducer.class.getName() + " url num_records EPS");
             System.exit(1);
         }
+        
+        int eps = Integer.parseInt(args[2]);
+        limiter = RateLimiter.create(eps);
+        
         int numRecords = Integer.parseInt(args[1]);
         long start = System.currentTimeMillis();
 
@@ -73,15 +77,15 @@ public class ThrottledKafkaEventProducer extends Thread{
                     e.printStackTrace();
             }
         };
-        byte[] payload = getPayLoad();
         
-        ProducerRecord<String, byte[]> record = new ProducerRecord<String, byte[]>("loadtest", payload);
         long maxLatency = -1L;
         long totalLatency = 0;
         int reportingInterval = 1000000;
         for (int i = 0; i < numRecords; i++) {
         	limiter.acquire();
             long sendStart = System.currentTimeMillis();
+            byte[] payload = getPayLoad();        
+            ProducerRecord<String, byte[]> record = new ProducerRecord<String, byte[]>("loadtest", payload);
             producer.send(record, callback);
             //producer.send(record);
             long sendEllapsed = System.currentTimeMillis() - sendStart;
@@ -107,7 +111,6 @@ public class ThrottledKafkaEventProducer extends Thread{
     	Map<String, String> event = EventSimulator.getEvent(0);
     	byte[] ret =  ObjectSerializer.getBytes(event);
     	recordSize = ret.length;
-    	System.out.println("Record size = " + recordSize);
     	return ret;
     }
 }

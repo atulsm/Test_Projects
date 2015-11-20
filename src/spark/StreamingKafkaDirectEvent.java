@@ -34,7 +34,9 @@ public final class StreamingKafkaDirectEvent {
 	  Logger.getLogger("akka").setLevel(Level.WARN);
 	  
 	  SparkConf sparkConf = new SparkConf().setMaster("spark://10.204.100.206:7077").setAppName("StreamingKafkaDirect101");
-	  sparkConf.setJars(new String[] { "target\\TestProjects-1.0-SNAPSHOT.jar" });
+
+	  //Only for running from eclipse
+	  //sparkConf.setJars(new String[] { "target\\TestProjects-1.0-SNAPSHOT.jar" });
 	
 	  //sparkConf.setExecutorEnv("executor-memory", "8G");
 	  //sparkConf.setExecutorEnv("spark.executor.memory", "8G");
@@ -68,26 +70,41 @@ public final class StreamingKafkaDirectEvent {
 	  JavaDStream<Map<String,String>> lines = messages.map(new Function<Tuple2<byte[], byte[]>, Map<String,String>>() {
 	      @Override
 	      public Map<String,String> call(Tuple2<byte[], byte[]> tuple2) {
-	        return (Map<String,String>) ObjectSerializer.getEvent(tuple2._2());
+	    	  Map<String,String> ret = (Map<String,String>) ObjectSerializer.getEvent(tuple2._2());
+	    	  
+	    	  process(ret);
+	    	  
+	    	  return ret;
 	      }
+
+		private void process(Map<String, String> ret) {
+			ret.put("obscountry", "US");
+		}
 	  });
 	    
 	  lines.foreachRDD(new Function<JavaRDD<Map<String,String>>, Void>() {
 		  @Override
 		  public Void call(JavaRDD<Map<String,String>> rdd) throws Exception {
-			  long count = rdd.count();
-			  System.out.println(new Date() + "  Total records read: " +count );
-			  if(count>0){
-				  System.out.println(rdd.first());
+			  long start = System.currentTimeMillis();
 			  
+			  long count = 1; //rdd.count();
+			  			  
+			  long countTime = System.currentTimeMillis() - start;
+			  start = System.currentTimeMillis();
 			  
-			  try {
-					JavaEsSpark.saveToEs(rdd, "events2/event");
-				}
-				catch(Exception es) {
-					es.printStackTrace();
-				}
-			  }
+			  //System.out.println(new Date() + "  Total records read: " +count );
+			  if(count>0){			  
+				  try {
+						JavaEsSpark.saveToEs(rdd, "events/event");
+						
+						long esSaveTime = System.currentTimeMillis() - start;
+						 //System.out.println(new Date() + "  Stats: countTime:" +countTime + " esSaveTime:" + esSaveTime + " total: " + count);
+						System.out.println(new Date() + "  Stats: esSaveTime:" + esSaveTime);
+					}
+					catch(Exception es) {
+						es.printStackTrace();
+					}
+				  }
 			  return null;
 		  }
 	  });

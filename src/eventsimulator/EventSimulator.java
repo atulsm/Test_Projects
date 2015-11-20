@@ -3,7 +3,9 @@ package eventsimulator;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -20,21 +22,42 @@ public class EventSimulator {
 	
 	private static List<String> header = new ArrayList<>();
 	private static List<Map<String, String>> events = new ArrayList<>();
+	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //$NON-NLS-1$
+	private static final Calendar cal = Calendar.getInstance();
+		
 	
 	public static void main(String[] args) {
-		System.out.println(getEvent(0));
+		Map<String, String> evt = getEvent(0);
+		System.out.println(evt);
+		System.out.println(ObjectSerializer.getBytes(evt).length);
+		
 	}
 
 	public static Map<String, String> getEvent(int index){
 		load();
-		return events.get(index);
+		
+		Map<String, String> evt = events.get(index);
+		String val = evt.get("dt");
+		if(val != null){
+			cal.setTimeInMillis(System.currentTimeMillis()-330*60*1000);
+			val = dateFormat.format(cal.getTime());
+			//System.out.println(val);
+			evt.put("dt", val);
+		}
+		
+		return evt;
 	}
 	
 	private static void load(){
 		if(!events.isEmpty())
 			return;
 		
-		File file = new File("src\\eventsimulator\\events.csv");
+		String fileName = System.getProperty("eventFile");
+		if(fileName == null){
+			fileName = "src\\eventsimulator\\events.csv";
+		}
+		
+		File file = new File(fileName);
 		if(!file.exists()){
 			throw new RuntimeException(file + " do not exist");
 		}	
@@ -49,9 +72,10 @@ public class EventSimulator {
 				String[] fields = eventLine.split(",");
 				Map<String, String> event = new HashMap<>();
 				for(int i=0;i<fields.length;i++){
+					String fieldHeader = header.get(i);
 					String val = fields[i];
-					if(val!=null && !val.isEmpty()){
-						event.put(header.get(i), val);
+					if(val!=null && !val.isEmpty()){					
+						event.put(fieldHeader, val);						
 					}
 				}
 				events.add(event);
