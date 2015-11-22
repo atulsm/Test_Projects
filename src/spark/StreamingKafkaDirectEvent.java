@@ -36,7 +36,8 @@ public final class StreamingKafkaDirectEvent {
 	  SparkConf sparkConf = new SparkConf().setMaster("spark://10.204.100.206:7077").setAppName("StreamingKafkaDirect101");
 
 	  //Only for running from eclipse
-	  //sparkConf.setJars(new String[] { "target\\TestProjects-1.0-SNAPSHOT.jar" });
+	  if(System.getProperty("dev") != null)
+		  sparkConf.setJars(new String[] { "target\\TestProjects-1.0-SNAPSHOT.jar" });
 	
 	  //sparkConf.setExecutorEnv("executor-memory", "8G");
 	  //sparkConf.setExecutorEnv("spark.executor.memory", "8G");
@@ -47,7 +48,17 @@ public final class StreamingKafkaDirectEvent {
 	  sparkConf.set("es.nodes", "10.204.102.200");
 	  sparkConf.set("es.index.auto.create", "true");
 		
-	  JavaStreamingContext ssc = new JavaStreamingContext(sparkConf, Durations.seconds(2));
+	  int duration = 2;
+	  if(args.length > 0){
+		  try{
+			  duration = Integer.parseInt(args[0]);
+			  System.out.println("duration changed to " + duration);
+		  }catch(Exception e){
+			  System.out.println("Duration reset to defaults");
+		  }
+	  }
+	  
+	  JavaStreamingContext ssc = new JavaStreamingContext(sparkConf, Durations.seconds(duration));
 	
 	    
 	  HashSet<String> topicsSet = new HashSet<String>();

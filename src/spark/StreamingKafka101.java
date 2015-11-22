@@ -37,7 +37,17 @@ public final class StreamingKafka101 {
 	  sparkConf.set("spark.executor.memory", "4G");
 	  //sparkConf.set("executor-memory", "8G");
 		
-	  JavaStreamingContext ssc = new JavaStreamingContext(sparkConf, Durations.seconds(2));
+	  int duration = 2;
+	  if(args.length > 0){
+		  try{
+			  duration = Integer.parseInt(args[0]);
+			  System.out.println("duration changed to " + duration);
+		  }catch(Exception e){
+			  System.out.println("Duration reset to defaults");
+		  }
+	  }
+	  
+	  JavaStreamingContext ssc = new JavaStreamingContext(sparkConf, Durations.seconds(duration));
 	
 	    
 	  Map<String, Integer> topicMap = new HashMap<String, Integer>();
