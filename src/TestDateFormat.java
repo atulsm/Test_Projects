@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class TestDateFormat {
 
-	private static final SimpleDateFormat agentDateFormat = new SimpleDateFormat("yyyyMMddHHmmss.SSSSSS"); //$NON-NLS-1$
+	private static final SimpleDateFormat agentDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //$NON-NLS-1$
 	
 	private static final Object lock = new Object();
 	
@@ -21,8 +21,9 @@ public class TestDateFormat {
 					while(true){
 						try{
 							synchronized (lock) {
-								Date date = agentDateFormat.parse("20110724143607.0");
-								System.out.println(date);
+								//Date date = agentDateFormat.parse("20110724143607.0");
+								//System.out.println(date);
+								System.out.println(agentDateFormat.format(new Date()));
 							}
 						}catch (Exception e) {
 							e.printStackTrace();
