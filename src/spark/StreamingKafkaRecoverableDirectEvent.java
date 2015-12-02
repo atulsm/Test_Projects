@@ -135,7 +135,10 @@ public final class StreamingKafkaRecoverableDirectEvent {
 				// +count );
 				if (count > 0) {
 					try {
-						JavaEsSpark.saveToEs(rdd, "events/event");
+						Map<String, String> idmap = new HashMap<>();
+						idmap.put("es.mapping.id", "id");
+						
+						JavaEsSpark.saveToEs(rdd, "events/event",idmap);
 
 						long esSaveTime = System.currentTimeMillis() - start;
 						// System.out.println(new Date() + " Stats: countTime:"

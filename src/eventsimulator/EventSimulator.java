@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * This class will read events.csv and generate a Map which represents that event.
@@ -44,6 +45,9 @@ public class EventSimulator {
 			//System.out.println(val);
 			evt.put("dt", val);
 		}
+		
+		UUID uuid = UUID.randomUUID();
+		evt.put("id", uuid.toString());		
 		
 		return evt;
 	}
