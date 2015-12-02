@@ -31,8 +31,8 @@ import scala.Tuple2;
  */
 public final class StreamingKafkaRecoverableDirectEvent {
 	private static String checkpointDir = "hdfs://idcdvstl233:8020/tmp/StreamingKafkaDirectEvent";
-	private static boolean checkPointEnabled = true;
-	private static int duration = 2;
+	private static boolean streamCheckPoint = false;
+	private static int duration = 10;
 	
 	public static void main(String[] args) {
 		Logger.getLogger("org").setLevel(Level.WARN);
@@ -48,10 +48,10 @@ public final class StreamingKafkaRecoverableDirectEvent {
 			
 			if(args.length>1){
 				try{
-					checkPointEnabled = Boolean.getBoolean(args[1]);
-					System.out.println("checkPointEnabled changed to " + checkPointEnabled);
+					streamCheckPoint = Boolean.getBoolean(args[1]);
+					System.out.println("streamCheckPoint changed to " + streamCheckPoint);
 				}catch (Exception e) {
-					System.out.println("Checkpoint reset to defaults");
+					System.out.println("streamCheckPoint reset to defaults");
 				}
 			}
 			
@@ -65,7 +65,7 @@ public final class StreamingKafkaRecoverableDirectEvent {
 		JavaStreamingContext ssc = JavaStreamingContext.getOrCreate(checkpointDir,new JavaStreamingContextFactory() {			
 			@Override
 			public JavaStreamingContext create() {
-				return createContext(checkpointDir, checkPointEnabled, duration);
+				return createContext(checkpointDir, streamCheckPoint, duration);
 			}
 		});
 		
@@ -75,7 +75,7 @@ public final class StreamingKafkaRecoverableDirectEvent {
 	
 	
 	
-	public static JavaStreamingContext createContext(String checkpointDirectory, boolean checkPointEnabled, int duration) {
+	public static JavaStreamingContext createContext(String checkpointDirectory, boolean streamCheckPoint, int duration) {
 		SparkConf sparkConf = new SparkConf().setAppName("StreamingKafkaRecoverableDirectEvent");
 
 		// Only for running from eclipse
@@ -102,7 +102,7 @@ public final class StreamingKafkaRecoverableDirectEvent {
 		JavaPairInputDStream<byte[], byte[]> messages = KafkaUtils.createDirectStream(ssc, byte[].class, byte[].class,
 				DefaultDecoder.class, DefaultDecoder.class, kafkaParams, topicsSet);
 		
-		if(checkPointEnabled){
+		if(streamCheckPoint){
 			messages.checkpoint(Durations.minutes(1));
 		}
 
