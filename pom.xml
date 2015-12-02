@@ -116,7 +116,7 @@
         <dependency>
 			<groupId>org.apache.hbase</groupId>
 			<artifactId>hbase-common</artifactId>
-			<version>1.0.0-cdh5.4.4</version>
+			<version>1.0.0-cdh5.5.0</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>log4j</artifactId>
@@ -141,7 +141,7 @@
 		<dependency>
 			<groupId>org.apache.hbase</groupId>
 			<artifactId>hbase-server</artifactId>
-			<version>1.0.0-cdh5.4.4</version>
+			<version>1.0.0-cdh5.5.0</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>log4j</artifactId>

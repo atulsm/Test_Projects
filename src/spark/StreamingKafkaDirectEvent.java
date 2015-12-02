@@ -33,7 +33,7 @@ public final class StreamingKafkaDirectEvent {
 	  Logger.getLogger("org").setLevel(Level.WARN);
 	  Logger.getLogger("akka").setLevel(Level.WARN);
 	  
-	  SparkConf sparkConf = new SparkConf().setMaster("spark://10.204.100.206:7077").setAppName("StreamingKafkaDirect101");
+	  SparkConf sparkConf = new SparkConf().setMaster("spark://10.204.100.206:7077").setAppName("StreamingKafkaDirectEvent");
 
 	  //Only for running from eclipse
 	  if(System.getProperty("dev") != null)
