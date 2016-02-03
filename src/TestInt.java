@@ -15,6 +15,7 @@ public class TestInt {
 		String str = (String) null;
 		System.out.println(str);
 		System.out.println((String)null);
+		System.out.println(Integer.MAX_VALUE);
 		
 	}
 

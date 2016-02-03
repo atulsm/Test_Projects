@@ -1,3 +1,5 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.security.KeyStore;
@@ -15,14 +17,17 @@ import javax.net.ssl.X509TrustManager;
 
 public class TestSSLClient {
 	// private static final String SERVER = "localhost";
-	private static final String SERVER = "164.99.175.156";
-	private static final int PORT = 8443;
+	private static final String SERVER = "164.99.174.174";
+	private static final int PORT = 2620;
 
 	public static void main(String[] args) throws Exception {
 		try {
 			SSLSocket soc = soc = (SSLSocket)getSSLSocket();
 			String[] list = soc.getEnabledCipherSuites();
 			System.out.println(Arrays.asList(list));
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader(soc.getInputStream()));
+			System.out.println(br.readLine());
 			
 			for(String cipher : list){
 				soc.setEnabledCipherSuites(new String[]{cipher});
