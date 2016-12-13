@@ -7,30 +7,23 @@
     <groupId>atul.github</groupId>
     <artifactId>TestProjects</artifactId>
     <version>1.0-SNAPSHOT</version>
+    
+    <repositories>
+    	<repository>
+	        <id>cloudera</id>
+        	<url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
+    	</repository>
+	</repositories>
 
     <dependencies>
     
-  		<dependency>
-			<groupId>org.apache.lucene</groupId>
-			<artifactId>lucene-core</artifactId>
-			<version>5.5.3</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.lucene</groupId>
-			<artifactId>lucene-memory</artifactId>
-			<version>5.5.3</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.lucene</groupId>
-			<artifactId>lucene-analyzers-common</artifactId>
-			<version>5.5.3</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.lucene</groupId>
-			<artifactId>lucene-queryparser</artifactId>
-			<version>5.5.3</version>
-		</dependency>    
-    
+    	<dependency>
+	    	<groupId>com.cloudera</groupId>
+	    	<artifactId>spark-hbase</artifactId>
+	    	<version>0.0.2-clabs</version>
+	    </dependency>
+	       
+	    
 	    <dependency>
 			<groupId>org.elasticsearch</groupId>
 			<artifactId>elasticsearch-hadoop</artifactId>
@@ -51,6 +44,10 @@
 				<exclusion>
 					<artifactId>apache-log4j-extras</artifactId>
 					<groupId>log4j</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spark-core_2.10</artifactId>
+					<groupId>org.apache.spark</groupId>
 				</exclusion>
 			</exclusions>
 	    </dependency>
@@ -75,27 +72,7 @@
     	</dependency>
      -->
      
-       	<dependency>
-			<groupId>org.apache.spark</groupId>
-			<artifactId>spark-core_2.10</artifactId>
-			<version>1.5.2</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>log4j</artifactId>
-					<groupId>log4j</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>slf4j-log4j12</artifactId>
-					<groupId>org.slf4j</groupId>
-				</exclusion>
-			</exclusions>
-       	</dependency>
 
-    	<dependency>
-			<groupId>org.apache.spark</groupId>
-			<artifactId>spark-streaming_2.10</artifactId>
-			<version>1.5.2</version>
-		</dependency>
 		
 		<dependency>
 			<groupId>org.apache.spark</groupId>
@@ -134,25 +111,6 @@
             </exclusions>
         </dependency>
         
-        <dependency>
-			<groupId>org.apache.hbase</groupId>
-			<artifactId>hbase-common</artifactId>
-			<version>1.0.0-cdh5.5.0</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>log4j</artifactId>
-					<groupId>log4j</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>slf4j-log4j12</artifactId>
-					<groupId>org.slf4j</groupId>
-				</exclusion>
-				<exclusion>
-					<groupId>jdk.tools</groupId>
-					<artifactId>jdk.tools</artifactId>
-				</exclusion>
-			</exclusions>
-        </dependency>
 		
 		 
 		<!-- 
@@ -163,21 +121,6 @@
 		</dependency>
 		-->
 		
-		<dependency>
-			<groupId>org.apache.hbase</groupId>
-			<artifactId>hbase-server</artifactId>
-			<version>1.0.0-cdh5.5.0</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>log4j</artifactId>
-					<groupId>log4j</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>slf4j-log4j12</artifactId>
-					<groupId>org.slf4j</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
          
         
         
@@ -197,14 +140,24 @@
 			<groupId>com.netiq.sentinel.cdh</groupId>
 			<artifactId>sentinel-common</artifactId>
 			<version>0.1.0-cdh5.3.1</version>
-		</dependency>
-		
-		<dependency>
-		    <groupId>org.apache.httpcomponents</groupId>
-		    <artifactId>httpclient</artifactId>
-		    <version>4.5.2</version>
-		</dependency>
-		
+			<exclusions>
+				<exclusion>
+					<artifactId>hbase-client</artifactId>
+					<groupId>org.apache.hbase</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>hbase-protocol</artifactId>
+					<groupId>org.apache.hbase</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>hbase-common</artifactId>
+					<groupId>org.apache.hbase</groupId>
+				</exclusion>
+			</exclusions>
+    	</dependency>
+    	
+    	
+	    	
 
     </dependencies>
 

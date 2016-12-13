@@ -8,11 +8,14 @@ public class TestRandomAccess {
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception{
-		File file = new File("d:\\test\\swms.exe.Config");
+		File file = new File("D:\\tmp\\950351_fileconnector\\logs\\AUDADM20150916-092615.LOG");
 		if(!file.exists()){
 			System.out.println("File doesnt exist");
 			return;
 		}
+		
+		System.out.println(file.length());
+		System.exit(0);
 
 		RandomAccessFile config = new RandomAccessFile(file,"rw");
 		

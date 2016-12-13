@@ -10,15 +10,22 @@ public class TestDate {
 
 	/**
 	 * @param args
+	 * @throws InterruptedException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
+		
+		
 		Calendar cal = Calendar.getInstance();
+		
+		cal.set(Calendar.YEAR, 2000);
+		System.out.println(cal.getTime());
+
 		
 		System.out.println(TimeZone.getDefault().getRawOffset());
 		System.out.println(330*60*1000);
 		
 		cal.setTimeInMillis(System.currentTimeMillis() + 5*60*60*1000);
-		
+		System.out.println(new Date(1459270800000L));
 		
 		cal.getTime();
 		System.out.println(System.currentTimeMillis());
@@ -35,6 +42,7 @@ public class TestDate {
 		Calendar calUtc = Calendar.getInstance(utc);
 		long diff = calUtc.getTime().getTime() - new Date().getTime();
 
+		Thread.sleep(10000);
 
 	}
 
