@@ -24,33 +24,35 @@ import sun.security.rsa.SunRsaSign;
 	
 	cd /tmp
 	export LD_LIBRARY_PATH=/usr/lib64
+	export NSS_DEFAULT_DB_TYPE=sql
 	rm -rf mkdir /tmp/fips/
 	mkdir /tmp/fips/
 	mkdir /tmp/fips/nssdb
-	modutil -create -dbdir /tmp/fips/nssdb/ -force
-	modutil -fips true -dbdir /tmp/fips/nssdb -force
-	modutil -changepw "NSS FIPS 140-2 Certificate DB" -dbdir /tmp/fips/nssdb -force
+	modutil -create -dbdir sql:/tmp/fips/nssdb/ -force
+	modutil -fips true -dbdir sql:/tmp/fips/nssdb -force
+	touch /tmp/fips/nssdb/secmod.db
+	modutil -changepw "NSS FIPS 140-2 Certificate DB" -dbdir sql:/tmp/fips/nssdb -force
 		# (provide password as password1!)
-	java -Dnss.lib=/usr/lib64 -Dnss.db=/tmp/fips/nssdb  -Djavax.net.ssl.keyStorePassword=password1! TestKeyStoreFIPS /tmp/KeyStore.jks changeit	
+	java -Dnss.lib=/usr/lib64 -Dnss.db=/tmp/fips/nssdb  -Djavax.net.ssl.keyStorePassword=password1! TestKeyStoreSharedDbFIPS /tmp/KeyStore.jks changeit	
       
  * @author satul
  *
  */
-public class TestKeyStoreFIPS {
+public class TestKeyStoreSharedDbFIPS {
 	
     public static final String NSS_LIB_DIR_PROP = "nss.lib";
     public static final String NSS_DB_DIR_PROP = "nss.db";
     public static final String SUN_JSSE = "SunJSSE";
     public static List<String> disabledAlgs = new ArrayList<String>();
 
-    private static final Logger logger = Logger.getLogger(TestKeyStoreFIPS.class.getName());
+    private static final Logger logger = Logger.getLogger(TestKeyStoreSharedDbFIPS.class.getName());
     
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception{
 		if(args.length != 2){
-			System.out.println("Usage eg: java -Dnss.lib=/usr/lib64 -Dnss.db=/tmp/fips/nssdb  -Djavax.net.ssl.keyStorePassword=password1! TestKeyStoreFIPS /tmp/jre8/lib/security/cacerts changeit");
+			System.out.println("Usage eg: java -Dnss.lib=/usr/lib64 -Dnss.db=/tmp/fips/nssdb  -Djavax.net.ssl.keyStorePassword=password1! TestKeyStoreSharedDbFIPS /tmp/jre8/lib/security/cacerts changeit");
 			System.exit(1);
 		}
 		
