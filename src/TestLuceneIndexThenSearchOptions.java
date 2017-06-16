@@ -6,19 +6,26 @@ import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.document.Field.Store;
 import org.apache.lucene.document.FieldType;
+import org.apache.lucene.document.StringField;
 import org.apache.lucene.index.IndexOptions;
+import org.apache.lucene.index.Term;
 import org.apache.lucene.index.memory.MemoryIndex;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.TermQuery;
 
 import esecurity.ccs.comp.event.indexedlog.LowercaseKeywordAnalyzer;
 
 
-public class TestLuceneQueryIndexThenSearch {
+public class TestLuceneIndexThenSearchOptions {
 
-	private static final String authorFullName = "Khushbu agarwal";
+	private static final String authorFullName = "khushbu agarwal";
 
 	
 	public static void main(String args[]) throws ParseException, IOException{
@@ -28,7 +35,7 @@ public class TestLuceneQueryIndexThenSearch {
 		Analyzer lowerkeywordAnalyzer = new LowercaseKeywordAnalyzer();
 		Analyzer whitespace = new WhitespaceAnalyzer();
 		
-		Analyzer[] analyzers = {standardAnalyzer, keywordAnalyzer, lowercaseWhitespace, whitespace , null};
+		Analyzer[] analyzers = {};//{standardAnalyzer, keywordAnalyzer, lowercaseWhitespace, whitespace};
 
 		String name = "author";
 		String value = authorFullName;
@@ -59,6 +66,20 @@ public class TestLuceneQueryIndexThenSearch {
 			tesLuceneOptions(analyzer, name, value, false, false, false, IndexOptions.DOCS_AND_FREQS_AND_POSITIONS);
 			tesLuceneOptions(analyzer, name, value, false, false, false, IndexOptions.DOCS);
 		}
+		
+		MemoryIndex index = new MemoryIndex();
+		Analyzer analyzer = new StandardAnalyzer();
+		StringField field3 = new StringField("author", authorFullName, Store.YES);
+		index.addField(field3, analyzer);
+		
+		Query query = new TermQuery(new Term("author",authorFullName));
+		search(index,query);
+		
+		query = new TermQuery(new Term("author","khushbu"));
+		search(index,query);
+		
+		query = new TermQuery(new Term("author","agarwal"));
+		search(index,query);
 	
 	}
 	
@@ -73,15 +94,38 @@ public class TestLuceneQueryIndexThenSearch {
 		Field field = getField(name, value, stored, tokenized, omitnorms, options);
 		index.addField(field, analyzer);
 
+		/*
 		QueryParser parser = new QueryParser("author", analyzer);
 		Query query = parser.parse(authorFullName);
 		search(index, query);
-
+		 */
+		
 		for (String splitName : authorFullName.split(" ")) {
-			query = parser.parse(splitName);
-			search(index, query);
+			//create the query objects
+			BooleanQuery bquery = new BooleanQuery();
+			PhraseQuery q2 = new PhraseQuery();
+			q2.add(new Term("author", splitName));
+			//finally, add it to the BooleanQuery object
+			bquery.add(q2, BooleanClause.Occur.MUST);
+			
+			search(index, bquery);
 		}
-		System.out.println();
+		
+		//create the query objects
+		BooleanQuery bquery = new BooleanQuery();
+		PhraseQuery q2 = new PhraseQuery();
+		//grab the search terms from the query string
+		String[] str = authorFullName.split(" ");
+		//build the query
+		for(String word : str) {
+		  //brand is the field I'm searching in
+		  q2.add(new Term("author", word.toLowerCase()));
+		}
+
+		//finally, add it to the BooleanQuery object
+		bquery.add(q2, BooleanClause.Occur.MUST);
+
+		search(index, bquery);
 	}
 
 	protected static Field getField(String name, String value, boolean stored, boolean tokenized, boolean omitnorms,
