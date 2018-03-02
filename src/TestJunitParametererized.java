@@ -13,26 +13,28 @@ import org.junit.runners.Parameterized.Parameters;
  */
 @RunWith(value = Parameterized.class)
 public class TestJunitParametererized {
-	private int size;
+	private int size1;
+	private int size2;
 
-	 public TestJunitParametererized(int number) {
-	   this.size = number;
+	 public TestJunitParametererized(int number1, int number2) {
+	   this.size1 = number1;
+	   this.size2 = number2;
 	 }
 
 	 @Parameters
 	 public static Collection data() {
-	   Object[][] data = new Object[][] { { 0 }, { 1 }, { 2 }};
+	   Object[][] data = new Object[][] { { 0,1 }, { 1,2 }, { 2,3 }};
 	   return Arrays.asList(data);
 	 }
 
 	    
 	@Test
 	public void sampleTest() {
-		System.out.println("Testing with size " + size);    	
+		System.out.println("Testing with size1 " + size1 + " size2 " + size2);    	
 	}		
     
 	private String getName(){
-		switch(size){
+		switch(size1){
 			case 0:
 				return "Minimal";
 			case 1:
