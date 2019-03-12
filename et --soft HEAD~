@@ -1,0 +1,371 @@
+[33mcommit 09a13bb4986fcc06433acf1abf376e5e324729bf[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Tue Dec 13 15:58:56 2016 +0530
+
+    Removing large files
+
+[33mcommit 0a093e692e0c3c68d30b5bca1bf979b863dfe622[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Tue Dec 13 15:56:25 2016 +0530
+
+    Syncing latest code changes
+
+[33mcommit 7cbc1a8333a8e5513bad197f983915fdd6df01cd[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Wed Sep 7 16:13:23 2016 +0530
+
+    Adding a sample plain vanila client for sentinel https REST
+
+[33mcommit 6412ec100cc07cb42684508929ac8706ccdde710[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Tue Jul 19 14:04:08 2016 +0530
+
+    Removing jdk-tools dependency
+
+[33mcommit 99faef3fc708a4434a2001ab4f80a08c883d3cf3[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Wed Jun 15 20:02:22 2016 +0530
+
+    Test class for condition
+
+[33mcommit 1d5fe3b04a5db74880b99aba0b2ee7070e442189[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Wed Jun 15 19:48:07 2016 +0530
+
+    Adding datesplitter using joda time
+
+[33mcommit e3017f102489adfeb14517ed9b3f4e5bd62f0cca[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Tue May 3 12:53:53 2016 +0530
+
+    Using watcher
+
+[33mcommit b57fa875da84305d0b1d5ba7124053caf5d196a9[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Thu Apr 14 11:14:03 2016 +0530
+
+    Modifying classpath
+
+[33mcommit 33b5a6cce803be3341370138c814dc71be3aab79[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Thu Apr 14 11:11:55 2016 +0530
+
+    Adding testcases for sqlserver ntml authentication
+
+[33mcommit 110c076524bc510be91cd68312331d50f55609eb[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Thu Apr 14 10:15:04 2016 +0530
+
+    Making changes to the TestSSL to support postgres as well
+
+[33mcommit 23bada74a43bcb74c1105d5b120afb4ed22d7ed4[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Tue Mar 8 11:50:57 2016 +0530
+
+    Few additional minor TC's
+
+[33mcommit 5f885682507fcd04022390e6499f7a7c371db171[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Wed Mar 2 00:36:42 2016 +0530
+
+    Testing junit parameterized
+
+[33mcommit 87ea6cb138107a8599540f63a2e6a579f5b405b4[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Tue Mar 1 23:23:14 2016 +0530
+
+    Add test for xee
+
+[33mcommit 987ac8ece8c821dc2b51ed1d80620e44178d18b8[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Thu Feb 18 12:33:56 2016 +0530
+
+    Sample messageformat usage
+
+[33mcommit 71206146333be1f93072a05390646e14be596cbf[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Tue Feb 16 20:10:58 2016 +0530
+
+    Enhancement to generate random ip and veriying EPS
+
+[33mcommit 848f34b26ae8ab439a7221a6cf91e706db678c63[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Wed Feb 3 18:04:17 2016 +0530
+
+    Refactoring Spark demo wordcount program
+
+[33mcommit 0b3c325e94df2c5602ca134b6edfaa59151dd13c[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Wed Feb 3 18:03:10 2016 +0530
+
+    Minor changes
+
+[33mcommit dc5468b5e3f546b2f8c626e47602e730a52d3fff[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Wed Dec 2 20:30:36 2015 +0530
+
+    Fixing the index id map for elasticsearch
+
+[33mcommit f0ea28ff8329826b6d360d5a4676d44f20f6c598[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Wed Dec 2 17:36:58 2015 +0530
+
+    Changing defaults of recoverable stream
+
+[33mcommit 2f8a9e6261bdbd0bb1e6312d5ed2157fd473ea54[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Wed Dec 2 17:32:15 2015 +0530
+
+    Adding recoverable spark streaming jobs. Added an hdfs test class
+
+[33mcommit 835a88ff67ea9449531572409d203d732fbd95f3[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Wed Dec 2 10:56:18 2015 +0530
+
+    misc changes
+
+[33mcommit 43fbdf77c667ea61dd17ee3bae072152bf6bc6a0[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Sun Nov 22 23:08:17 2015 +0530
+
+    additional command  line options
+
+[33mcommit 96463a22920602115286d3025b4f4c86087dffbb[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Fri Nov 20 20:53:31 2015 +0530
+
+    Introduced event simulator and modified kafka producer and spark consumer to work with the data from there
+
+[33mcommit d7542eed495b7a5a351912685cbcaeab72a052ce[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Thu Nov 19 02:02:05 2015 +0530
+
+     write to elasticsearch
+
+[33mcommit 909d9e620a00a15dba9fb65dbcf7dfb683e460e7[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Thu Nov 19 00:27:43 2015 +0530
+
+    Changes to support event map to be read from spark
+
+[33mcommit 36cf087e89403b82b9a054120fa1277e4771c95c[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Wed Nov 18 23:57:49 2015 +0530
+
+    Changes to support event map to be sent/read from kafka
+
+[33mcommit fb1c96d279a107baf131f86766610d0e78b05fdc[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Wed Nov 18 14:20:45 2015 +0530
+
+    Throttled kafka producer
+
+[33mcommit c0a689e2e25ab7233c2f60dea16dca21e0a80133[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Wed Nov 18 14:03:05 2015 +0530
+
+    direct kafka spark streaming
+
+[33mcommit db6d0ed3c7b16e67e5a81b8e652aa9bd70e7ee0d[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Wed Nov 18 11:29:15 2015 +0530
+
+    hiding unnecessary logging and tuning the streaming
+
+[33mcommit 2db2a87b75f41f8aae801fa3b8c9fe5e39c2f9af[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Tue Nov 17 17:53:08 2015 +0530
+
+    SparkStreaming on standalone. Fixed shade plugin issues
+
+[33mcommit 01a7305c87011edc6a53cd41495cedfa41399e57[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Tue Nov 17 15:01:57 2015 +0530
+
+    Correcting dependency for running spark
+
+[33mcommit e1ff22bef6fb60eae1eaee4bbab81e1d69621890[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Mon Nov 9 17:21:39 2015 +0530
+
+    adding shade plugin
+
+[33mcommit cf5540755094536dd51898be887331ce96663b93[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Mon Nov 9 15:55:44 2015 +0530
+
+    consumer fine tune
+
+[33mcommit 90b84d83bdc8da6143a31d30a0d256291440aad1[m
+Author: root <root@idcdvstl220.nqeng.lab>
+Date:   Mon Nov 9 15:21:08 2015 +0530
+
+    Fixing dependencies
+
+[33mcommit 6be762ba74627d1b16ffa20db6e8b990957b1053[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Sun Nov 8 21:35:58 2015 +0530
+
+    perf optimization
+
+[33mcommit 3df7236651879107a2a716b0db54f969d87927ec[m
+Author: atulsm <atulsm@gmail.com>
+Date:   Sun Nov 8 21:31:18 2015 +0530
+
+    consumer group example
+
+[33mcommit 19b3afb566e14370edf725bcb3455397998a0b9e[m
+Author: atulsm <atulsm@gmail.com>
+Date:   Thu Nov 5 22:20:40 2015 +0530
+
+    kafka tests
+
+[33mcommit 624800d7c68e4fb8fd8991d99aced7ab1af3aa14[m
+Author: atulsm <atulsm@gmail.com>
+Date:   Wed Nov 4 16:35:17 2015 +0530
+
+    renaming package
+
+[33mcommit bd4e6ec04612f6b8d1d048e91bf2f97a13720682[m
+Author: atulsm <atulsm@gmail.com>
+Date:   Wed Nov 4 14:18:48 2015 +0530
+
+    spark streaming working 2nd test
+
+[33mcommit 014f89bc4f828528379c4234189ee271dc878ea5[m
+Author: atulsm <atulsm@gmail.com>
+Date:   Wed Nov 4 13:33:55 2015 +0530
+
+    spark streaming working
+
+[33mcommit e9317852b10b71c309cf7a924223c1067736eb58[m
+Author: atulsm <atulsm@gmail.com>
+Date:   Wed Nov 4 12:43:50 2015 +0530
+
+    spark streaming
+
+[33mcommit d85278a9e48399cd84679e0ab68fbe4b3b8dac5e[m
+Author: atulsm <atulsm@gmail.com>
+Date:   Wed Nov 4 12:23:35 2015 +0530
+
+    spark streaming
+
+[33mcommit a37aab13888654847047cc264ffa9cacd75c93f3[m
+Author: atulsm <atulsm@gmail.com>
+Date:   Tue Nov 3 13:07:38 2015 +0530
+
+    Hbase timeseries read
+
+[33mcommit 6a3319dcb48e66b938f5fe75c0eaf9cf576a59ff[m
+Author: atulsm <atulsm@gmail.com>
+Date:   Mon Nov 2 17:32:56 2015 +0530
+
+    level 3 sample spark programs
+
+[33mcommit 80cfddac2098ee57f8138503b7a457cca9fc38a9[m
+Author: atulsm <atulsm@gmail.com>
+Date:   Mon Nov 2 13:51:19 2015 +0530
+
+    level 2 sample spark programs
+
+[33mcommit ef8152a376a094bce7e88adf36fd87b187c77255[m
+Author: atulsm <atulsm@gmail.com>
+Date:   Sun Nov 1 08:54:53 2015 +0530
+
+    atul home changes
+
+[33mcommit 75da5e37336246961720d5519424f83d716a85f3[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Sun Nov 1 08:39:13 2015 +0530
+
+    adding clients for yarn cluster and client
+
+[33mcommit 32683e6658035f31e9688deee067310a44486ff5[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Thu Oct 29 13:06:44 2015 +0530
+
+    minor changes
+
+[33mcommit 0c2ca4773b9fb9f4000fb6b172e3f931fee1df1d[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Thu Oct 29 13:06:06 2015 +0530
+
+    initial standalone spark app
+
+[33mcommit 73638d8b629ae0da28a51b18b88259850a95d8f3[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Thu Oct 29 12:36:22 2015 +0530
+
+    Clearing errors
+
+[33mcommit 90cf00ae6744f20ff381e760e4c8d39d99b3de1b[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Fri Oct 16 11:58:26 2015 +0530
+
+    Changing kryo version
+
+[33mcommit 865e8917b27d4cd956e968605446c9cbcdbbab07[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Fri Oct 16 11:18:32 2015 +0530
+
+    Adding deserialization tests also
+
+[33mcommit 6303445ea68fcea9e23d95a78271a28c1aa2e337[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Fri Oct 16 10:22:19 2015 +0530
+
+    Adding tests to compare avro/kryo serialization
+
+[33mcommit 2ce87df0ec03d121ef5c510eb4e72ee54cb10c2a[m
+Author: Atul Soman <atul.soman@microfocus.com>
+Date:   Tue Oct 6 15:05:30 2015 +0530
+
+    Corecting test for cyclic barrier
+
+[33mcommit c74cf4b5533073f55b37df3c7483b851e1aa0f80[m
+Author: atulsm <atulsm@gmail.com>
+Date:   Sat Apr 18 10:17:30 2015 +0530
+
+    Adding the database load test files
+
+[33mcommit c3ba650660452800b5fdc1e9a044266e86d5789d[m
+Author: atulsm <atulsm@gmail.com>
+Date:   Sun Apr 12 08:36:30 2015 +0530
+
+    final changes
+
+[33mcommit c74d185f1d2f6e0fb1b158469074f6a0a732c123[m
+Author: atulsm <atulsm@gmail.com>
+Date:   Sun Apr 12 00:47:29 2015 +0530
+
+    commit 2
+
+[33mcommit edf4f08430960a371f75eb35a8ed29926ffe6361[m
+Author: atulsm <atulsm@gmail.com>
+Date:   Sun Apr 12 00:07:53 2015 +0530
+
+    commit 2
+
+[33mcommit fe5b1d8e50411b4e96286eaaf29d8f44fb3b39b3[m
+Author: atulsm <atulsm@gmail.com>
+Date:   Sat Apr 11 23:51:42 2015 +0530
+
+    initial
+
+[33mcommit e3f7c2936b5ca3f08c0440d3f77d3f65ebd1c4b0[m
+Author: Atul Soman <SAtul@novell.com>
+Date:   Mon Apr 6 13:59:16 2015 +0530
+
+    April 2015
+
+[33mcommit 45f9c878f835d0ce2c1094e4133f4eed1f47f240[m
+Author: Atul Soman <SAtul@novell.com>
+Date:   Mon Oct 13 11:32:18 2014 +0530
+
+    Initial set of all the test classes present
+
+[33mcommit a7f4be40ba132b7fff95dcd4c803a1f7e0bea18c[m
+Author: atulsm <atulsm@users.noreply.github.com>
+Date:   Mon Oct 13 11:11:56 2014 +0530
+
+    Initial commit

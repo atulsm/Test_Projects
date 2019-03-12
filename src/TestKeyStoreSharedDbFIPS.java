@@ -19,7 +19,7 @@ import sun.security.rsa.SunRsaSign;
 /**
  * Before running the tool run the following in your Linux box.
  * 
-	keytool -genkey -alias mydomain -keyalg RSA -keystore /tmp/KeyStore.jks -keysize 2048
+	keytool -genkey -alias webserver -keyalg RSA -keystore /tmp/KeyStore.jks -keysize 2048
 		#(Provide keystore password as changeit)
 	
 	cd /tmp

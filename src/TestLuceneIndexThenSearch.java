@@ -41,5 +41,4 @@ public class TestLuceneIndexThenSearch {
 			System.out.println("no match found for " + query);
 		}
 	}
-
 }

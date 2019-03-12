@@ -11,14 +11,14 @@ public class TestServerSocket {
 	 */
 	public static void main(String[] args) {
 		try{
-			ServerSocket serv = new ServerSocket(5555);
+			ServerSocket serv = new ServerSocket(1468);
 			Socket client = serv.accept();
 			//client accepts input, do nothing and close on the 5th input
 			BufferedReader br = new BufferedReader(new InputStreamReader(client.getInputStream()));
 			int i = 0;
 			String in = br.readLine();
 			while(in != null){
-				if(i++ ==5){
+				if(i++ ==50){
 					break;
 				}
 				in = br.readLine();

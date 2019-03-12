@@ -17,8 +17,8 @@ import javax.net.ssl.X509TrustManager;
 
 public class TestSSLClient {
 	// private static final String SERVER = "localhost";
-	private static final String SERVER = "164.99.174.174";
-	private static final int PORT = 2620;
+	private static final String SERVER = "smtp.gmail.com";
+	private static final int PORT = 587;
 
 	public static void main(String[] args) throws Exception {
 		try {
@@ -51,8 +51,8 @@ public class TestSSLClient {
 			KeyStore ks = null;
 
 			try {
-				//ctx = SSLContext.getInstance("TLSv1.2");
-				ctx = SSLContext.getInstance("SSLv3");
+				ctx = SSLContext.getInstance("TLSv1.2");
+				//ctx = SSLContext.getInstance("SSLv3");
 			} catch (Exception e) {
 				ctx = SSLContext.getInstance("TLS");
 			}
