@@ -1,4 +1,4 @@
-package lambda;
+package functional.programming;
 
 import java.util.Arrays;
 import java.util.List;
