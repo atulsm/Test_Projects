@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -9,5 +10,8 @@ public class TestMapIteration {
 			System.out.println(entry.getKey() + ":" + entry.getValue());
 		}
 		
+		Map<String, Integer> mutableUser = new HashMap<String, Integer>(users);
+		mutableUser.compute("Atul", (key, value) -> value+10);
+		System.out.println(mutableUser);
 	}
 }
