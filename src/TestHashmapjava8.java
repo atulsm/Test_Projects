@@ -8,7 +8,9 @@ public class TestHashmapjava8 {
 		HashMap map = new HashMap<>();
 		map.put("1", "EventSourceManagers");
 		map.put("2", "SentinelHosts");
-		System.out.println(map);		
+		map.put(null,  "Atul");
+		System.out.println(map);	
+		System.out.println(map.get(null));
 	}
 
 	public static void main1(String[] args) {

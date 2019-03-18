@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 public class StreamBasics {
 
@@ -43,6 +44,8 @@ public class StreamBasics {
     	
     	System.out.println(stringList.toArray());
     	System.out.println(stringList.toArray(new String[] {}));
+    	
+    	IntStream.range(1,10).forEach(e->System.out.println(e));
 
 	}
 
