@@ -30,6 +30,11 @@
 			<artifactId>lucene-queryparser</artifactId>
 			<version>5.5.3</version>
 		</dependency>    
+		<dependency>
+		    <groupId>org.apache.lucene</groupId>
+		    <artifactId>lucene-codecs</artifactId>
+		    <version>5.5.3</version>
+		</dependency>
     
 	    <dependency>
 			<groupId>org.elasticsearch</groupId>
@@ -63,6 +68,14 @@
     			<exclusion>
     				<artifactId>log4j</artifactId>
     				<groupId>log4j</groupId>
+    			</exclusion>
+    			<exclusion>
+    				<groupId>org.elasticsearch</groupId>
+    				<artifactId>elasticsearch</artifactId>
+    			</exclusion>
+    			<exclusion>
+    				<groupId>com.novell.sentinel</groupId>
+    				<artifactId>ccsbase</artifactId>
     			</exclusion>
     		</exclusions>
     	</dependency>

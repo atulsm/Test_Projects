@@ -1,3 +1,5 @@
+package lucene;
+
 import java.io.IOException;
 import java.text.MessageFormat;
 
@@ -35,7 +37,7 @@ public class TestLuceneIndexThenSearchOptions {
 		Analyzer lowerkeywordAnalyzer = new LowercaseKeywordAnalyzer();
 		Analyzer whitespace = new WhitespaceAnalyzer();
 		
-		Analyzer[] analyzers = {};//{standardAnalyzer, keywordAnalyzer, lowercaseWhitespace, whitespace};
+		Analyzer[] analyzers = {standardAnalyzer, keywordAnalyzer, lowercaseWhitespace, whitespace};
 
 		String name = "author";
 		String value = authorFullName;

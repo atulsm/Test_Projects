@@ -1,3 +1,5 @@
+package lucene;
+
 import java.io.IOException;
 
 import org.apache.lucene.analysis.Analyzer;
