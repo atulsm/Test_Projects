@@ -1,36 +1,33 @@
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
 
 
 public class TestCyclicBarrier {
 
-	private static final CountDownLatch latch = new CountDownLatch(1);
-	private static CyclicBarrier barrier = new CyclicBarrier(2);
+	private static CyclicBarrier barrier = new CyclicBarrier(2, ()-> {System.out.println("All threads have arrived");});
 
 	public static void main(String[] args) throws Exception{
-
-		System.out.println("Before Thread initialization");
-		new Thread(){
-			
-			public void run(){
-				while(true){
-					System.out.println("Bbefore await");
-					try{
-						barrier.await();
-					}catch(Exception e){
-						e.printStackTrace();
-					}
-					System.out.println("After await");
-				}
-			};
-			
-		}.start();
+		new Thread(()-> {
+			try {
+				System.out.println("Thread 1, awaiting to complete");
+				Thread.sleep(10000);
+				barrier.await();
+				System.out.println("Thread 1, awaite complete");
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}).start();
 		
-		Thread.sleep(5000);
-		System.out.println("After Sleep, about to call reset");
-		barrier.await();
-		barrier.reset();
-		Thread.sleep(10);
+		new Thread(()-> {
+			try {
+				System.out.println("Thread 2, awaiting to complete");
+				Thread.sleep(5000);
+				barrier.await();
+				System.out.println("Thread 2, awaite complete");
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}).start();
+
 		System.out.println("Done");
 	}
 
