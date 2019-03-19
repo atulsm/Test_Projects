@@ -9,10 +9,10 @@ public class TestReentrantReadWriteLock {
 		new ReadLock().start();
 		new ReadLock().start();
 		Thread.sleep(2000);
-		System.out.println("After small sleeping ..");
+		System.out.println("After small sleeping ... Trying to write lock");
 		lock.writeLock().lock(); 
 
-		System.out.println("Test");
+		System.out.println("Successfully got right locks");
 		Thread.sleep(1000);
 		lock.writeLock().unlock();
 		System.out.println("Write unlock");
@@ -23,7 +23,7 @@ public class TestReentrantReadWriteLock {
 		public void run() {
 			lock.readLock().lock();
 			try{
-				System.out.println("Sleeping ..");
+				System.out.println("Got readlock. Sleeping ..");
 				Thread.sleep(5000);
 			}catch(Exception e){
 				e.printStackTrace();

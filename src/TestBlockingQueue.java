@@ -13,7 +13,8 @@ public class TestBlockingQueue {
 				int i = 0;
 				try{
 					while(i++ < events){
-						queue.take();
+						int val = queue.take();
+						System.out.println("Consuming " + val);
 					}
 				}catch(Exception e){
 					e.printStackTrace();
@@ -27,7 +28,8 @@ public class TestBlockingQueue {
 				int i = 0;
 				while(i++ < events){
 					try{
-						queue.put(i);					
+						queue.put(i);	
+						System.out.println("Producing " + i);
 					}catch(Exception e){
 						e.printStackTrace();
 					}
